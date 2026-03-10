@@ -4,12 +4,13 @@ import {
   fetchDashboardSuccess,
   fetchDashboardFailure,
 } from '../slices/dashboardSlice';
+import type { DashboardPayload } from '../../types';
 
 /**
  * Mock dashboard data payload — mirrors the design screenshot exactly.
  * This would normally come from a REST/GraphQL API endpoint.
  */
-const mockDashboardData = {
+const mockDashboardData: DashboardPayload = {
   kpiMetrics: [
     {
       id: 'new-tickets',
@@ -114,9 +115,9 @@ const mockDashboardData = {
 };
 
 /**
- * Simulates fetching dashboard data with a 800ms delay.
+ * Simulates fetching dashboard data with an 800ms delay.
  */
-function mockFetchDashboard() {
+function mockFetchDashboard(): Promise<DashboardPayload> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(mockDashboardData);
@@ -126,10 +127,12 @@ function mockFetchDashboard() {
 
 function* handleFetchDashboard() {
   try {
-    const data = yield call(mockFetchDashboard);
+    const data: DashboardPayload = yield call(mockFetchDashboard);
     yield put(fetchDashboardSuccess(data));
   } catch (error) {
-    yield put(fetchDashboardFailure(error.message));
+    const message =
+      error instanceof Error ? error.message : 'Failed to fetch dashboard data';
+    yield put(fetchDashboardFailure(message));
   }
 }
 

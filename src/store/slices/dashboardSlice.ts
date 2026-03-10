@@ -1,6 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type {
+  KpiMetric,
+  ChartDataPoint,
+  TableRow,
+  DonutChartSegment,
+  PieChartSegment,
+  DashboardPayload,
+} from '../../types';
 
-const initialState = {
+interface DashboardState {
+  kpiMetrics: KpiMetric[];
+  chartData: ChartDataPoint[];
+  tableData: TableRow[];
+  donutChartData: DonutChartSegment[];
+  pieChartData: PieChartSegment[];
+  feedbackCount: number;
+  todayProfit: number;
+  loading: boolean;
+  error: string | null;
+}
+
+const initialState: DashboardState = {
   kpiMetrics: [],
   chartData: [],
   tableData: [],
@@ -20,7 +40,7 @@ const dashboardSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    fetchDashboardSuccess: (state, action) => {
+    fetchDashboardSuccess: (state, action: PayloadAction<DashboardPayload>) => {
       state.loading = false;
       state.kpiMetrics = action.payload.kpiMetrics;
       state.chartData = action.payload.chartData;
@@ -31,7 +51,7 @@ const dashboardSlice = createSlice({
       state.todayProfit = action.payload.todayProfit;
       state.error = null;
     },
-    fetchDashboardFailure: (state, action) => {
+    fetchDashboardFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.error = action.payload;
     },

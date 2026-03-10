@@ -1,6 +1,6 @@
 # Tabler Admin Dashboard
 
-A fully responsive admin dashboard built with React, featuring a login flow, dynamic data management via Redux & Redux-Saga, and a modern UI inspired by the Tabler design system.
+A fully responsive admin dashboard built with React + TypeScript, featuring a login flow, dynamic data management via Redux & Redux-Saga, and a modern UI inspired by the Tabler design system.
 
 ## 🧪 Demo Credentials
 
@@ -14,6 +14,7 @@ A fully responsive admin dashboard built with React, featuring a login flow, dyn
 | Layer             | Technology                          |
 | ----------------- | ----------------------------------- |
 | Framework         | React 19 (Vite)                     |
+| Language          | TypeScript (strict mode)            |
 | Package Manager   | pnpm                                |
 | State Management  | Redux Toolkit + Redux-Saga          |
 | Routing           | React Router DOM v7                 |
@@ -22,6 +23,15 @@ A fully responsive admin dashboard built with React, featuring a login flow, dyn
 | Charts            | Recharts                            |
 
 ## 📐 Architecture & Technical Decisions
+
+### Why TypeScript?
+
+The entire codebase uses strict TypeScript for:
+
+- **Type-safe Redux state** — `RootState` and `AppDispatch` types are exported from the store and consumed via custom typed hooks (`useAppSelector`, `useAppDispatch`).
+- **Typed action payloads** — every Redux action uses `PayloadAction<T>` with explicit types (`LoginCredentials`, `User`, `DashboardPayload`).
+- **Centralized type definitions** — all shared interfaces live in `src/types/index.ts`, ensuring a single source of truth.
+- **Compile-time safety** — catches bugs before runtime, especially in data-flow-heavy patterns like saga → slice → component.
 
 ### Why Redux-Saga over Redux Thunk?
 
@@ -35,16 +45,18 @@ Redux-Saga provides a more declarative and testable approach to handling side ef
 
 ```
 store/
+├── hooks.ts               # Typed useAppDispatch / useAppSelector
+├── index.ts               # Store config, RootState & AppDispatch exports
 ├── slices/
-│   ├── authSlice.js       # isAuthenticated, user, loading, error
-│   └── dashboardSlice.js  # kpiMetrics, chartData, tableData, donut/pie data
+│   ├── authSlice.ts       # isAuthenticated, user, loading, error
+│   └── dashboardSlice.ts  # kpiMetrics, chartData, tableData, donut/pie data
 └── sagas/
-    ├── authSaga.js        # Mock login API (1s delay)
-    ├── dashboardSaga.js   # Mock dashboard data fetch (800ms delay)
-    └── index.js           # Root saga (forks all feature sagas)
+    ├── authSaga.ts        # Mock login API (1s delay)
+    ├── dashboardSaga.ts   # Mock dashboard data fetch (800ms delay)
+    └── index.ts           # Root saga (forks all feature sagas)
 ```
 
-All UI components read from the Redux store using `useSelector`. No data is hardcoded in components — it flows exclusively through dispatched actions and saga responses.
+All UI components read from the Redux store using `useAppSelector`. No data is hardcoded in components — it flows exclusively through dispatched actions and saga responses.
 
 ### Routing Strategy
 
@@ -79,22 +91,26 @@ pnpm dev
 ```
 src/
 ├── components/
-│   └── ProtectedRoute.jsx     # Route guard component
+│   └── ProtectedRoute.tsx      # Route guard component
 ├── pages/
-│   ├── LoginPage.jsx           # Login view
-│   └── DashboardPage.jsx       # Protected dashboard view
+│   ├── LoginPage.tsx            # Login view
+│   └── DashboardPage.tsx        # Protected dashboard view
 ├── store/
-│   ├── index.js                # Store configuration
+│   ├── hooks.ts                 # Typed Redux hooks
+│   ├── index.ts                 # Store configuration + exported types
 │   ├── slices/
-│   │   ├── authSlice.js        # Auth state management
-│   │   └── dashboardSlice.js   # Dashboard data state
+│   │   ├── authSlice.ts         # Auth state management
+│   │   └── dashboardSlice.ts    # Dashboard data state
 │   └── sagas/
-│       ├── index.js            # Root saga
-│       ├── authSaga.js         # Auth side effects
-│       └── dashboardSaga.js    # Dashboard data side effects
-├── App.jsx                     # Root component with routing
-├── main.jsx                    # Entry point with Redux Provider
-└── index.css                   # Tailwind CSS entry
+│       ├── index.ts             # Root saga
+│       ├── authSaga.ts          # Auth side effects
+│       └── dashboardSaga.ts     # Dashboard data side effects
+├── types/
+│   └── index.ts                 # Shared TypeScript interfaces
+├── App.tsx                      # Root component with routing
+├── main.tsx                     # Entry point with Redux Provider
+├── index.css                    # Tailwind CSS entry
+└── vite-env.d.ts                # Vite client type declarations
 ```
 
 ## 📝 License

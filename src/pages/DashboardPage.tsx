@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { fetchDashboardRequest } from '../store/slices/dashboardSlice';
 import { logout } from '../store/slices/authSlice';
 
@@ -8,9 +8,9 @@ import { logout } from '../store/slices/authSlice';
  * Full UI components will be built in Steps 4–6.
  */
 const DashboardPage = () => {
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  const { kpiMetrics, loading, error } = useSelector(
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
+  const { kpiMetrics, loading, error } = useAppSelector(
     (state) => state.dashboard
   );
 

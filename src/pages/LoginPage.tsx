@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { type FormEvent, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { loginRequest } from '../store/slices/authSlice';
 
 /**
@@ -7,12 +7,12 @@ import { loginRequest } from '../store/slices/authSlice';
  * Full UI will be built in Step 3.
  */
 const LoginPage = () => {
-  const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const { loading, error } = useAppSelector((state) => state.auth);
   const [email, setEmail] = useState('admin@tabler.io');
   const [password, setPassword] = useState('password');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(loginRequest({ email, password }));
   };

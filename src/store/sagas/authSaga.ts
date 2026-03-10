@@ -1,11 +1,13 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { loginRequest, loginSuccess, loginFailure } from '../slices/authSlice';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import type { User, LoginCredentials } from '../../types';
 
 /**
  * Simulates an API login request with a 1-second delay.
  * Validates against mock credentials.
  */
-function mockLoginApi(credentials) {
+function mockLoginApi(credentials: LoginCredentials): Promise<User> {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (
@@ -26,12 +28,14 @@ function mockLoginApi(credentials) {
   });
 }
 
-function* handleLogin(action) {
+function* handleLogin(action: PayloadAction<LoginCredentials>) {
   try {
-    const user = yield call(mockLoginApi, action.payload);
+    const user: User = yield call(mockLoginApi, action.payload);
     yield put(loginSuccess(user));
   } catch (error) {
-    yield put(loginFailure(error.message));
+    const message =
+      error instanceof Error ? error.message : 'An unknown error occurred';
+    yield put(loginFailure(message));
   }
 }
 

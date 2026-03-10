@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from './store/hooks';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -10,7 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute';
  * - /: protected dashboard route (redirects to /login if not authenticated)
  */
 const App = () => {
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   return (
     <BrowserRouter>
