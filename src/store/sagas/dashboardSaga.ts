@@ -99,19 +99,47 @@ const mockDashboardData: DashboardPayload = {
   ],
 
   donutChartData: [
-    { name: 'Segment A', value: 53, fill: '#2fb344' },
-    { name: 'Segment B', value: 47, fill: '#8bce7f' },
+    { name: 'Segment A', value: 63.0, fill: '#65B726' },
+    { name: 'Segment B', value: 37.0, fill: '#8ED64E' },
   ],
 
   pieChartData: [
-    { name: 'Segment A', value: 47.4, fill: '#206bc4' },
-    { name: 'Segment B', value: 33.1, fill: '#4299e1' },
-    { name: 'Segment C', value: 10.5, fill: '#1a2942' },
-    { name: 'Segment D', value: 9.0, fill: '#8bb8e8' },
+    { name: 'Segment A', value: 47.4, fill: '#1E3A5F' },
+    { name: 'Segment B', value: 33.1, fill: '#4077CE' },
+    { name: 'Segment C', value: 10.5, fill: '#A2C5EE' },
+    { name: 'Segment D', value: 9.0, fill: '#C1DCF9' },
   ],
 
-  feedbackCount: 62,
-  todayProfit: 152,
+  feedbackItems: [
+    {
+      id: 1,
+      user: 'Jessica Biel',
+      avatarColor: '#e64980',
+      avatarInitials: 'JB',
+      text: 'The new dashboard design looks great, really clean layout!',
+      timestamp: '2 mins ago',
+    },
+    {
+      id: 2,
+      user: 'Mike Ross',
+      avatarColor: '#4263eb',
+      avatarInitials: 'MR',
+      text: 'Found a minor bug on the settings page, will submit a report.',
+      timestamp: '15 mins ago',
+    },
+    {
+      id: 3,
+      user: 'Anna Williams',
+      avatarColor: '#2fb344',
+      avatarInitials: 'AW',
+      text: 'Could we add dark mode support? Would be a nice addition.',
+      timestamp: '1 hour ago',
+    },
+  ],
+
+  todayProfit: 1245,
+  yesterdayProfit: 1110,
+  profitTrend: '+12%',
 };
 
 /**

@@ -49,12 +49,23 @@ export interface PieChartSegment {
   fill: string;
 }
 
+export interface FeedbackItem {
+  id: number;
+  user: string;
+  avatarColor: string;
+  avatarInitials: string | null;
+  text: string;
+  timestamp: string;
+}
+
 export interface DashboardPayload {
   kpiMetrics: KpiMetric[];
   chartData: ChartDataPoint[];
   tableData: TableRow[];
   donutChartData: DonutChartSegment[];
   pieChartData: PieChartSegment[];
-  feedbackCount: number;
+  feedbackItems: FeedbackItem[];
   todayProfit: number;
+  yesterdayProfit: number;
+  profitTrend: string;
 }

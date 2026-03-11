@@ -5,6 +5,7 @@ import type {
   TableRow,
   DonutChartSegment,
   PieChartSegment,
+  FeedbackItem,
   DashboardPayload,
 } from '../../types';
 
@@ -14,8 +15,10 @@ interface DashboardState {
   tableData: TableRow[];
   donutChartData: DonutChartSegment[];
   pieChartData: PieChartSegment[];
-  feedbackCount: number;
+  feedbackItems: FeedbackItem[];
   todayProfit: number;
+  yesterdayProfit: number;
+  profitTrend: string;
   loading: boolean;
   error: string | null;
 }
@@ -26,8 +29,10 @@ const initialState: DashboardState = {
   tableData: [],
   donutChartData: [],
   pieChartData: [],
-  feedbackCount: 0,
+  feedbackItems: [],
   todayProfit: 0,
+  yesterdayProfit: 0,
+  profitTrend: '+0%',
   loading: false,
   error: null,
 };
@@ -47,8 +52,10 @@ const dashboardSlice = createSlice({
       state.tableData = action.payload.tableData;
       state.donutChartData = action.payload.donutChartData;
       state.pieChartData = action.payload.pieChartData;
-      state.feedbackCount = action.payload.feedbackCount;
+      state.feedbackItems = action.payload.feedbackItems;
       state.todayProfit = action.payload.todayProfit;
+      state.yesterdayProfit = action.payload.yesterdayProfit;
+      state.profitTrend = action.payload.profitTrend;
       state.error = null;
     },
     fetchDashboardFailure: (state, action: PayloadAction<string>) => {
