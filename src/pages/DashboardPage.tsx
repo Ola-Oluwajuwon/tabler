@@ -112,15 +112,20 @@ const PieChartTooltip = ({ active, payload }: { active?: boolean; payload?: Arra
 interface AvatarProps {
   color: string;
   initials: string | null;
+  avatarUrl?: string | null;
   size?: number;
 }
 
-const Avatar = ({ color, initials, size = 36 }: AvatarProps) => (
+const Avatar = ({ color, initials, avatarUrl, size = 36 }: AvatarProps) => (
   <div
-    className="rounded-full flex items-center justify-center text-white text-xs font-medium shrink-0"
+    className="rounded-full flex items-center justify-center text-white text-xs font-medium shrink-0 overflow-hidden"
     style={{ width: size, height: size, backgroundColor: color }}
   >
-    {initials ?? ''}
+    {avatarUrl ? (
+      <img src={avatarUrl} alt={initials || 'Avatar'} className="w-full h-full object-cover" />
+    ) : (
+      initials ?? ''
+    )}
   </div>
 );
 
@@ -267,6 +272,7 @@ const DashboardPage = () => {
                                 <Avatar
                                   color={row.avatarColor}
                                   initials={row.avatarInitials}
+                                  avatarUrl={row.avatarUrl}
                                 />
                                 <span className="text-sm text-slate-700">
                                   {row.user}

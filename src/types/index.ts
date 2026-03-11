@@ -33,6 +33,7 @@ export interface TableRow {
   user: string;
   avatarColor: string;
   avatarInitials: string | null;
+  avatarUrl?: string | null;
   commit: string;
   date: string;
 }
