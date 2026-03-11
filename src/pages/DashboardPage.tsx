@@ -1,15 +1,13 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { fetchDashboardRequest } from '../store/slices/dashboardSlice';
-import { logout } from '../store/slices/authSlice';
+import { Header } from '../components/header';
 
 /**
- * DashboardPage — placeholder that fetches & displays Redux state.
- * Full UI components will be built in Steps 4–6.
+ * DashboardPage — main dashboard view with two-tier header and KPI metrics.
  */
 const DashboardPage = () => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.auth);
   const { kpiMetrics, loading, error } = useAppSelector(
     (state) => state.dashboard
   );
@@ -18,27 +16,14 @@ const DashboardPage = () => {
     dispatch(fetchDashboardRequest());
   }, [dispatch]);
 
-  const handleLogout = () => {
-    dispatch(logout());
-  };
-
   return (
-    <div className="min-h-screen bg-slate-50 p-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl font-bold">Dashboard</h1>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
-              Welcome, <strong>{user?.name}</strong> ({user?.role})
-            </span>
-            <button
-              onClick={handleLogout}
-              className="text-sm text-red-500 hover:text-red-700 transition-colors"
-            >
-              Logout
-            </button>
-          </div>
-        </div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Two-tier Header */}
+      <Header />
+
+      {/* Dashboard Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h1 className="text-2xl font-bold text-gray-800 mb-6">Dashboard</h1>
 
         {loading && (
           <p className="text-gray-500 text-center py-10">
@@ -73,7 +58,7 @@ const DashboardPage = () => {
             ))}
           </div>
         )}
-      </div>
+      </main>
     </div>
   );
 };
