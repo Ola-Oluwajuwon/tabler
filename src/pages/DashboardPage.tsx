@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { fetchDashboardRequest } from '../store/slices/dashboardSlice';
 import { Header } from '../components/header';
+import StatCard from '../components/StatCard';
 
 /**
  * DashboardPage — main dashboard view with two-tier header and KPI metrics.
@@ -38,23 +39,13 @@ const DashboardPage = () => {
         {!loading && !error && kpiMetrics.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {kpiMetrics.map((metric) => (
-              <div
+              <StatCard
                 key={metric.id}
-                className="bg-white rounded-lg border border-gray-200 p-4 text-center"
-              >
-                <span
-                  className={`text-xs font-medium ${
-                    metric.trendDirection === 'up'
-                      ? 'text-green-500'
-                      : 'text-red-500'
-                  }`}
-                >
-                  {metric.trend}
-                  {metric.trendDirection === 'up' ? ' ↑' : ' ↓'}
-                </span>
-                <p className="text-2xl font-bold mt-1">{metric.value}</p>
-                <p className="text-xs text-gray-500 mt-1">{metric.label}</p>
-              </div>
+                value={metric.value}
+                label={metric.label}
+                trendValue={metric.trend}
+                trendDirection={metric.trendDirection}
+              />
             ))}
           </div>
         )}
